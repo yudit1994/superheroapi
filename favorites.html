@@ -1,6 +1,6 @@
 <style type="text/css">
         body{
-                background-image: url('batman.jpg');
+                background-image: url('images/batman.jpg');
                 
         }
         h1{
@@ -54,7 +54,7 @@ for (var i = 0; i<localStorage.length; i++) {
         <a href='page.html?val=${id}&num=1'>
         <img src='${imgsrc}' class='img1'>
         <span>${title}</span></a>
-        <img src='delete.jpg' onmouseenter="enterdel('${title}')" onmouseleave="leavedel('${title}')" onclick='delet("${localStorage.key(i)}")' class='img' id='${title}'>
+        <img src='images/delete.jpg' onmouseenter="enterdel('${title}')" onmouseleave="leavedel('${title}')" onclick='delet("${localStorage.key(i)}")' class='img' id='${title}'>
         </p>
         <br>`;
     }

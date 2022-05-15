@@ -66,7 +66,7 @@
 						width: 20px;
 				}
 				body{
-					background-image: url('batman.jpg');
+					background-image: url('images/batman.jpg');
 					background-size: cover;
 					background-position: centre;
 
@@ -137,13 +137,13 @@
 		for(let i=0; i<movies.length; i++){
 			see = 0;
 			var send = movies[i].id;
-			var id = 'heartwhite.png';
+			var id = 'images/heartwhite.png';
 			for (var j = 0; j<localStorage.length; j++) {
 								 var a = localStorage.key(j);
 								 
 								 if(a==send){
 									see = 1;
-									id = 'heart.png';
+									id = 'images/heart.png';
 								 }
 				}
 			hidden.innerHTML = `<img src='${movies[i].image.url}' id='one'>`;
@@ -167,15 +167,15 @@
 		//hover functions for image change
 	
 	function enter(id) {		    
-			document.getElementById(id).src = 'heart.png';			
+			document.getElementById(id).src = 'images/heart.png';			
 	}
 	function leave(id,test){
 		var a = localStorage.getItem(id);
 		if(test==0 && a == null){
-			document.getElementById(id).src = 'heartwhite.png';
+			document.getElementById(id).src = 'images/heartwhite.png';
 		}
 		else if(see==1){
-			document.getElementById(id).src = 'heart.png';
+			document.getElementById(id).src = 'images/heart.png';
 		}		
 	}
 	
@@ -196,7 +196,7 @@
 
 				
 					     console.log(id);
-							 document.getElementById(id).src = "heart.png";					 
+							 document.getElementById(id).src = "images/heart.png";					 
 					 		 localStorage.setItem(id, name+"|"+image);
 				
 	}	    
