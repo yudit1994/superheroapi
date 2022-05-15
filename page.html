@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style >
+		#Year,#plot{
+       font-size: 24px;
+		}
+		#title{
+			font-size: 50px;
+		}
+		img{
+			width:400px;
+			margin: 37px 0px 0px 200px;
+		}
+    #powerstat{
+    	position: absolute;
+      top: 0px;
+      left: 768px;
+    }
+    body{
+					background-image: url('background.jpg');
+					background-size: cover;
+					background-position: centre;
+
+					
+				}
+	</style>
+</head>
+<body>
+	<div>
+  	<img id="myImg" src="">
+  </div>
+  <div id="powerstat">
+  	<h1 id="title"></h1>
+    <p id="combat"></p>
+  	<p id="durability"></p>
+  	<p id="intelligence"></p>
+  	<p id="power"></p>
+  	<p id="speed"></p>
+  	<p id="strength"></p>  	
+  
+  	<p id='alignment'></p>
+  	<p id='alter-egos'></p>
+  	<p id='full-name'></p>
+  	<p id='publisher'></p>
+  </div>
+  <script type="text/javascript">
+  	var url_string = window.location.href ;
+  	var url = new URL(url_string);
+    var value = url.searchParams.get("val");
+    var num = url.searchParams.get("num");
+    
+    var title = document.getElementById('title');
+    var combat = document.getElementById('combat');
+    var durability = document.getElementById('durability');
+    var intelligence = document.getElementById('intelligence');
+    var power = document.getElementById('power');
+    var speed = document.getElementById('speed');
+    var strength = document.getElementById('strength');
+    var alignment = document.getElementById('alignment');
+    var alteregos = document.getElementById('alter-egos');
+    var fullname = document.getElementById('full-name');
+    var publisher = document.getElementById('publisher');
+
+  	async function fav(){
+  	let url = 0;
+  	console.log(num);
+  	if(num == 1){
+	   url = 'https://corsanywhere.herokuapp.com/https://www.superheroapi.com/api.php/338148107599656/'+value;
+  	}
+		const res = await fetch(url);
+		const data = await res.json();
+        console.log(data.biography);
+		if(data.response == 'success'){
+						
+			
+            title.innerHTML += `<p>${data.name}</p>`;
+            if(data.powerstats.combat != 'null'){
+            combat.innerHTML += `<p>Combat: ${data.powerstats.combat}</p>`;
+            }
+            if(data.powerstats.durability != 'null'){
+            durability.innerHTML += `<p>Durability: ${data.powerstats.durability}</p>`;
+            }
+            if(data.powerstats.intelligence != 'null'){
+            intelligence.innerHTML += `<p>Intelligence: ${data.powerstats.intelligence}</p>`;
+            }
+            if(data.powerstats.power != 'null'){
+            power.innerHTML += `<p>Power: ${data.powerstats.power}</p>`;
+            }
+            if(data.powerstats.speed != 'null'){
+            speed.innerHTML += `<p>Speed: ${data.powerstats.speed}</p>`;
+            }
+            if(data.powerstats.strength != 'null'){
+            strength.innerHTML += `<p>Strength: ${data.powerstats.strength}</p>`;
+            }
+            if(data.biography.alignment != 'null'){
+            alignment.innerHTML += `<p>Alignment: ${data.biography.alignment}</p>`;
+            }
+            if(data.biography['alter-egos'] != 'No alter egos found.'){
+            alteregos.innerHTML += `<p>Alter-egos: ${data.biography['alter-egos']}</p>`;
+            }
+            if(data.biography['full-name'] != ''){
+            fullname.innerHTML += `<p>Full-name: ${data.biography['full-name']}</p>`;
+            }
+            if(data.biography.publisher != 'null'){
+            publisher.innerHTML += `<p>Publisher: ${data.biography.publisher}</p>`;
+            }
+            document.getElementById("myImg").src = data.image.url;
+            console.log('test'+data.biography['alter-egos']);
+						 
+	    }
+	    else{
+	         title.innerHTML += `<p>no movie found</p>`	
+	    }
+	
+	}
+	fav();
+  </script>
+</body>
+</html>

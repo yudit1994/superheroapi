@@ -1,0 +1,207 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		#box{
+					border: 1px solid black;
+						width: 471px;
+						margin-top: 0px;
+						margin-left: 300px;
+						position: absolute;
+						background-color: white;
+						overflow-y: scroll;
+						max-height: 70vh;
+						max-width: 40vw;
+
+			}
+			#box::-webkit-scrollbar{
+				 display: none;
+			}
+			button{
+					height: 46px;
+			}
+			input{
+				    width: 473px;
+						height: 47px;
+						font-size: 29px;
+						margin: 120px 0px 0px 300px;
+			}
+			#favorite{
+				position: absolute;
+						left: 800px;
+						top: -14px;
+						margin: 52px 0px 0px 64px;
+			}
+			.img1{
+				height: 50px;
+						width: 50px
+			}
+			.img{
+				height: 20px;
+				width: 20px;
+				position: relative;
+						top: -13px;
+						left: 54px;
+			}
+			a{
+				text-decoration: none;
+				color: black;
+				font-size: 19px;
+				position: relative;
+						top: -18px;
+						left: 25px;
+			}
+				#favvi{
+					margin-top: 80px;
+				}
+				h1{
+					font-size: 50px;
+					color: white;
+					position: absolute;
+					top: -43px;
+					left: 137px;
+				}
+				#search{
+					height: 20px;
+						width: 20px;
+				}
+				body{
+					background-image: url('batman.jpg');
+					background-size: cover;
+					background-position: centre;
+
+					
+				}
+				#hidden{
+					display: none;
+				}
+	</style>
+	
+</head>
+<body>
+<input type="text" name="search" onkeyup="findmovies()" placeholder=" search superhero...">
+<div id="box"></div>
+<a href='favorites.html'><h1>FAVORIES</h1></a>
+<p id='hidden'></p>
+<script type="text/javascript">
+
+		
+		
+
+		//fetches the data from the url and pass the data to the movielist function
+	async function loadmovie(value) {
+		
+		const url = 'https://corsanywhere.herokuapp.com/https://www.superheroapi.com/api.php/338148107599656/search/'+value;
+		const res = await fetch(url);
+		const data = await res.json();
+    //console.log(data);
+		if(data.response == 'success'){		
+		 //console.log(data.results);
+			movielist(data.results);						
+		}
+		else{
+			console.log('false');
+		}
+		
+	}
+
+
+	//calls the loadmovie function 
+	function movies(){
+		 const val = (document.querySelector('input').value).trim();
+		 loadmovie(val);	
+	}
+
+
+	//finds the movies on key up
+	function findmovies(){
+		 const val = document.querySelector('input').value;
+		 if(val==""){
+				 var box = document.getElementById('box');
+		 box.innerHTML =  "";
+		 }
+		 movies();
+	}
+
+
+		var see = 0;
+
+
+	//displays the search result under search box
+	function movielist(movies){
+		var box = document.getElementById('box');
+		var hidden = document.getElementById('hidden');
+		box.innerHTML =  "";
+		
+		
+		for(let i=0; i<movies.length; i++){
+			see = 0;
+			var send = movies[i].id;
+			var id = 'heartwhite.png';
+			for (var j = 0; j<localStorage.length; j++) {
+								 var a = localStorage.key(j);
+								 
+								 if(a==send){
+									see = 1;
+									id = 'heart.png';
+								 }
+				}
+			hidden.innerHTML = `<img src='${movies[i].image.url}' id='one'>`;
+			var image = document.getElementById('one');
+      var isLoaded = image.complete && image.naturalHeight !== 0;
+      //console.log(movies[i].name);
+			if(isLoaded){
+			box.innerHTML +=`<p>
+			<img src='${movies[i].image.url}' class='img1'>
+			<a class='link' href='page.html?val=${movies[i].id}&num=1'>` +movies[i].name + `</a>
+			<img src="${id}" class='img' id='${send}' onmouseenter="enter('${send}')" onmouseleave="leave('${send}',${see})" onclick='fav("${movies[i].id}","${movies[i].name}","${movies[i].image.url}")'>
+			</p>
+			<br>`;	
+			}		
+		}
+			
+			
+	}
+	
+		
+		//hover functions for image change
+	
+	function enter(id) {		    
+			document.getElementById(id).src = 'heart.png';			
+	}
+	function leave(id,test){
+		var a = localStorage.getItem(id);
+		if(test==0 && a == null){
+			document.getElementById(id).src = 'heartwhite.png';
+		}
+		else if(see==1){
+			document.getElementById(id).src = 'heart.png';
+		}		
+	}
+	
+	
+
+
+	//creates the favorite list
+	async function fav(id,name,image){
+		
+			var count = 0;
+				for (var j = 0; j<localStorage.length; j++) {
+								 var a = localStorage.key(j);
+								 //console.log('test1'+a);
+								 if(a==id){
+									count = 1;
+									 }
+				}
+
+				
+					     console.log(id);
+							 document.getElementById(id).src = "heart.png";					 
+					 		 localStorage.setItem(id, name+"|"+image);
+				
+	}	    
+	
+	
+</script>
+</body>
+</html>
